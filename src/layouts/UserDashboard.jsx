@@ -74,7 +74,7 @@ export default function UserDashboard() {
     };
 
     try {
-      const response = await fetch('https://feedback-system-production-ec93.up.railway.app/api/feedbacks', {
+      const response = await fetch('https://feedback-system-production-ec93.up.railway.app/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
