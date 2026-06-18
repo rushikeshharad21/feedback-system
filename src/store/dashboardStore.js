@@ -6,7 +6,7 @@ let socket;
 const getSocket = () => {
   if (!socket) {
     socket = io('https://feedback-system-production-ec93.up.railway.app', {
-      transports: ['websocket'],
+      transports: ['polling','websocket'],
       reconnectionAttempts: 5,
     });
   }
