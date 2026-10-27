@@ -80,16 +80,31 @@ export default function AdminDashboard() {
   ], []);
 
   const drawerContent = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Toolbar>
-        <Typography variant="h5" sx={{ color: '#fff', fontWeight: 900, letterSpacing: -0.5 }}>
-          Feedback OS
-        </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: (t) => t.palette.mode === 'dark' ? '#0b0f19' : '#ffffff' }}>
+      <Toolbar sx={{ px: 2.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+          <Box sx={{
+            width: 32,
+            height: 32,
+            borderRadius: '8px',
+            bgcolor: 'primary.main',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            fontWeight: 900,
+            fontSize: '16px'
+          }}>
+            ⚡
+          </Box>
+          <Typography variant="h6" sx={{ color: (t) => t.palette.mode === 'dark' ? '#f8fafc' : '#0f172a', fontWeight: 900, letterSpacing: -0.5, fontSize: '1.15rem' }}>
+            Feedback<span style={{ color: '#38bdf8' }}>OS</span>
+          </Typography>
+        </Box>
       </Toolbar>
-      <Divider sx={{ borderColor: '#334155' }} />
-      <List sx={{ px: 1, mt: 2 }}>
+      <Divider sx={{ borderColor: 'divider' }} />
+      <List sx={{ px: 1.5, mt: 2, flex: 1 }}>
         {menuItems.map((item) => {
-          // एक्टिव्ह स्टेटस मॅपिंगची अचूक लॉजिक जोडली
           const isActive = item.path === '/'
             ? location.pathname === '/'
             : location.pathname.includes(item.path);
@@ -99,17 +114,34 @@ export default function AdminDashboard() {
               key={item.text}
               onClick={() => { navigate(item.path); setMobileOpen(false); }}
               sx={{
-                mb: 1,
-                borderRadius: 2,
-                bgcolor: isActive ? '#38bdf8' : 'transparent',
-                color:   isActive ? '#0f172a' : 'inherit',
-                '&:hover': { bgcolor: isActive ? '#38bdf8' : 'rgba(255,255,255,0.05)' }
+                mb: 0.75,
+                borderRadius: '10px',
+                bgcolor: isActive 
+                  ? (themeMode === 'dark' ? 'rgba(56, 189, 248, 0.12)' : 'rgba(124, 58, 237, 0.1)') 
+                  : 'transparent',
+                color: isActive 
+                  ? (themeMode === 'dark' ? '#38bdf8' : '#7c3aed') 
+                  : (themeMode === 'dark' ? '#94a3b8' : '#64748b'),
+                borderLeft: isActive 
+                  ? (themeMode === 'dark' ? '3px solid #38bdf8' : '3px solid #7c3aed') 
+                  : '3px solid transparent',
+                py: 1,
+                px: 1.5,
+                transition: 'all 0.15s ease-in-out',
+                '&:hover': {
+                  bgcolor: isActive 
+                    ? (themeMode === 'dark' ? 'rgba(56, 189, 248, 0.18)' : 'rgba(124, 58, 237, 0.15)') 
+                    : (themeMode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)'),
+                  color: isActive 
+                    ? (themeMode === 'dark' ? '#38bdf8' : '#7c3aed') 
+                    : (themeMode === 'dark' ? '#f8fafc' : '#0f172a'),
+                }
               }}
             >
-              <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>{item.icon}</ListItemIcon>
+              <ListItemIcon sx={{ color: 'inherit', minWidth: 36, '& svg': { fontSize: 20 } }}>{item.icon}</ListItemIcon>
               <ListItemText
                 primary={item.text}
-                slotProps={{ primary: { sx: { fontWeight: 700, fontSize: '0.925rem' } } }}
+                slotProps={{ primary: { sx: { fontWeight: isActive ? 700 : 600, fontSize: '0.875rem' } } }}
               />
             </ListItemButton>
           );
@@ -119,7 +151,7 @@ export default function AdminDashboard() {
   );
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', overflowX: 'hidden' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
 
       {/* ── APP BAR ── */}
       <AppBar
@@ -127,7 +159,9 @@ export default function AdminDashboard() {
         sx={{
           width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { md: `${drawerWidth}px` },
-          bgcolor: 'background.paper',
+          bgcolor: (t) => t.palette.mode === 'dark' ? 'rgba(11, 15, 25, 0.8)' : 'rgba(255, 255, 255, 0.85)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           boxShadow: 'none',
           borderBottom: '1px solid',
           borderColor: 'divider',
@@ -148,9 +182,9 @@ export default function AdminDashboard() {
             </IconButton>
             <Typography
               variant="h6"
-              sx={{ fontWeight: 800, letterSpacing: -0.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+              sx={{ fontWeight: 800, letterSpacing: -0.4, fontSize: { xs: '1rem', sm: '1.15rem' }, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             >
-              Wheeltrix
+              Feedback Management Console
             </Typography>
           </Box>
 
@@ -295,15 +329,25 @@ export default function AdminDashboard() {
 
             {/* Logout */}
             <Button
-              variant="contained"
+              variant="outlined"
               color="error"
+              size="small"
               endIcon={<ExitToAppIcon />}
               onClick={logoutUser}
               sx={{
-                borderRadius: 2, textTransform: 'none', fontWeight: 700,
-                fontSize: { xs: '13px', sm: '14px' }, px: { xs: 2, sm: 3 }, py: { xs: 0.75, sm: 1 },
-                boxShadow: 'none', whiteSpace: 'nowrap', minWidth: 'auto',
-                '&:hover': { boxShadow: 'none', bgcolor: 'error.dark' }
+                borderRadius: '8px',
+                textTransform: 'none',
+                fontWeight: 700,
+                fontSize: { xs: '12px', sm: '13px' },
+                px: { xs: 1.75, sm: 2.25 },
+                py: { xs: 0.5, sm: 0.75 },
+                whiteSpace: 'nowrap',
+                minWidth: 'auto',
+                borderColor: (t) => t.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.35)' : 'rgba(239, 68, 68, 0.4)',
+                '&:hover': {
+                  borderColor: 'error.main',
+                  bgcolor: (t) => t.palette.mode === 'dark' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(239, 68, 68, 0.05)'
+                }
               }}
             >
               Logout
@@ -321,7 +365,14 @@ export default function AdminDashboard() {
           ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: '#0f172a', color: '#94a3b8' }
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              bgcolor: (t) => t.palette.mode === 'dark' ? '#0b0f19' : '#ffffff',
+              borderRight: '1px solid',
+              borderColor: 'divider',
+              boxShadow: 'none'
+            }
           }}
         >
           {drawerContent}
@@ -331,7 +382,14 @@ export default function AdminDashboard() {
           variant="permanent"
           sx={{
             display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, bgcolor: '#0f172a', color: '#94a3b8' }
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              bgcolor: (t) => t.palette.mode === 'dark' ? '#0b0f19' : '#ffffff',
+              borderRight: '1px solid',
+              borderColor: 'divider',
+              boxShadow: 'none'
+            }
           }}
           open
         >

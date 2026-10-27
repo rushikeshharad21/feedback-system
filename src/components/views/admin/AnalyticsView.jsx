@@ -72,12 +72,13 @@ export default function AnalyticsViewPage() {
 
 const styles = {
   panel: (isDarkMode) => ({
-    p: { xs: 2, sm: 4 },
-    borderRadius: 4,
+    p: { xs: 2.5, sm: 4 },
+    borderRadius: '16px',
     border: '1px solid',
-    borderColor: isDarkMode ? '#334155' : '#e2e8f0',
-    boxShadow: 'none',
-    bgcolor: 'background.paper',
+    borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
+    boxShadow: isDarkMode ? '0 4px 20px -2px rgba(0, 0, 0, 0.35)' : '0 4px 20px -2px rgba(0, 0, 0, 0.04)',
+    bgcolor: isDarkMode ? 'rgba(30, 41, 59, 0.65)' : '#ffffff',
+    backdropFilter: 'blur(16px)',
     backgroundImage: 'none',
     minWidth: 0,
     width: '100%',

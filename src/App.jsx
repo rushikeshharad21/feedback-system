@@ -22,19 +22,20 @@ import SettingsPage from "./components/views/admin/settingsPage.jsx";
 const buildTheme = (mode) => createTheme({
   palette: {
     mode,
-    primary: { main: '#7c3aed' },
-    secondary: { main: '#38bdf8' },
+    primary: { main: '#7c3aed', light: '#a78bfa', dark: '#6d28d9' },
+    secondary: { main: '#38bdf8', light: '#7dd3fc', dark: '#0284c7' },
     background: {
-      default: mode === 'light' ? '#f8fafc' : '#0f172a',
-      paper:   mode === 'light' ? '#ffffff' : '#1e293b',
+      default: mode === 'light' ? '#f8fafc' : '#0b0f19',
+      paper:   mode === 'light' ? '#ffffff' : '#111827',
     },
     text: {
       primary:   mode === 'light' ? '#0f172a' : '#f8fafc',
       secondary: mode === 'light' ? '#64748b' : '#94a3b8',
-    }
+    },
+    divider: mode === 'light' ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)',
   },
-  shape: { borderRadius: 16 },
-  typography: { fontFamily: 'Plus Jakarta Sans, Roboto, sans-serif' }
+  shape: { borderRadius: 10 },
+  typography: { fontFamily: 'Plus Jakarta Sans, Inter, Roboto, sans-serif' }
 });
 
 export default function App() {

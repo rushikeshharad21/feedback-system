@@ -313,7 +313,7 @@ const styles = {
   contentPanel: (isDarkMode) => ({
     p: { xs: 3, sm: 4 },
     height: '100%',
-    borderRadius: 6,
+    borderRadius: '16px',
     border: '1px solid',
     borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(15, 23, 42, 0.06)',
     bgcolor: isDarkMode ? 'rgba(30, 41, 59, 0.55)' : 'rgba(255, 255, 255, 0.65)',
@@ -324,13 +324,13 @@ const styles = {
   }),
   panelHeader: { fontWeight: 800, mb: 1, color: 'text.primary', letterSpacing: -0.5 },
   panelSubtitle: { color: 'text.secondary', mb: 3 },
-  formAlert: { mb: 3, borderRadius: 2, backdropFilter: 'blur(4px)' },
+  formAlert: { mb: 3, borderRadius: '8px', backdropFilter: 'blur(4px)' },
   inputSpacing: { mb: 3 },
   ratingContainer: (isDarkMode) => ({
     p: 2,
     border: '1px solid',
     borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.12)',
-    borderRadius: 2,
+    borderRadius: '10px',
     mb: 3,
     bgcolor: isDarkMode ? 'rgba(15, 23, 42, 0.2)' : 'rgba(255, 255, 255, 0.3)',
   }),
@@ -338,7 +338,7 @@ const styles = {
   submitBtn: {
     background: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
     py: 1.5,
-    borderRadius: 2,
+    borderRadius: '10px',
     fontWeight: 700,
     textTransform: 'none',
     fontSize: '15px',
@@ -351,7 +351,7 @@ const styles = {
   tableWrapper: (isDarkMode) => ({
     border: '1px solid',
     borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
-    borderRadius: 3,
+    borderRadius: '12px',
     maxHeight: 420,
     bgcolor: isDarkMode ? 'rgba(15, 23, 42, 0.25)' : 'rgba(255, 255, 255, 0.3)',
     backdropFilter: 'blur(10px)',
