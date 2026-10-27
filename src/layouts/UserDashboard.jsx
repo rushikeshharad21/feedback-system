@@ -9,6 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useDashboardStore } from '../store/dashboardStore.js';
+import { getBackendUrl } from '../config.js';
 
 export default function UserDashboard() {
   const [mode, setMode] = useState('dark');
@@ -36,7 +37,7 @@ export default function UserDashboard() {
   const logoutUser = useDashboardStore((state) => state.logoutUser);
   const feedbacks = useDashboardStore((state) => state.feedbacks) || [];
   const fetchInitialFeedbacks = useDashboardStore((state) => state.fetchInitialFeedbacks);
-  const addFeedbackLocal = useDashboardStore((state) => state.addFeedbackLocal);
+  const injectRealFeedback = useDashboardStore((state) => state.injectRealFeedback);
 
   // Form Input & Loading States
   const [category, setCategory] = useState('General');
@@ -74,7 +75,7 @@ export default function UserDashboard() {
     };
 
     try {
-      const response = await fetch('https://feedback-system-production-ec93.up.railway.app/api/feedback', {
+      const response = await fetch(`${getBackendUrl()}/api/feedbacks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -89,8 +90,8 @@ export default function UserDashboard() {
       setAlert({ type: 'success', text: 'Your feedback has been broadcasted live! 🎉' });
       
       // ✅ FIXED: बॅकएंडच्या रचनेनुसार savedData ऐवजी savedData.data पाठवला आहे
-      if (typeof addFeedbackLocal === 'function' && savedData.success) {
-        addFeedbackLocal(savedData.data); 
+      if (typeof injectRealFeedback === 'function' && savedData.success) {
+        injectRealFeedback(savedData.data); 
       }
       
       setMessage('');
@@ -107,8 +108,8 @@ export default function UserDashboard() {
         createdAt: new Date().toISOString()
       };
 
-      if (typeof addFeedbackLocal === 'function') {
-        addFeedbackLocal(localFallbackPayload);
+      if (typeof injectRealFeedback === 'function') {
+        injectRealFeedback(localFallbackPayload);
       }
 
       setAlert({ 

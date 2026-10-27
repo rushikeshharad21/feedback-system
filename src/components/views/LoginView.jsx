@@ -3,6 +3,7 @@ import { Box, Paper, Typography, TextField, Button, Alert, Container, Tabs, Tab 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useDashboardStore } from '../../store/dashboardStore.js';
+import { getBackendUrl } from '../../config.js';
 
 export default function LoginView() {
   const [tab, setTab]           = useState(0); // 0 = login, 1 = register
@@ -33,7 +34,7 @@ export default function LoginView() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/user/login', {
+      const response = await fetch(`${getBackendUrl()}/api/user/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -56,7 +57,7 @@ export default function LoginView() {
     if (!name.trim()) { setError('Name is required.'); return; }
 
     try {
-      const response = await fetch('http://localhost:5000/api/user/register', {
+      const response = await fetch(`${getBackendUrl()}/api/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name.trim(), email, password, role: 'user' }),

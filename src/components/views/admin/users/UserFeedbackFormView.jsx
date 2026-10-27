@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Paper, Typography, Button, TextField, Rating, Grid, MenuItem, Alert, useTheme } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useDashboardStore } from "../../../../store/dashboardStore.js";
+import { getBackendUrl } from "../../../../config.js";
 
 export default function UserFeedbackFormView() {
   const theme = useTheme();
@@ -42,7 +43,7 @@ export default function UserFeedbackFormView() {
       }
 
       // २. बॅकएंड API ला डेटा पाठवणे
-      const response = await fetch("http://localhost:5000/api/feedbacks", {
+      const response = await fetch(`${getBackendUrl()}/api/feedbacks`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(feedbackPayload),

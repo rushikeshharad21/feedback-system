@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { io } from 'socket.io-client';
+import { getBackendUrl } from '../config.js';
 
 let socket;
 const getSocket = () => {
   if (!socket) {
-    socket = io('https://feedback-system-production-ec93.up.railway.app', {
-      transports: ['polling','websocket'],
+    socket = io(getBackendUrl(), {
+      transports: ['websocket'],
       reconnectionAttempts: 5,
     });
   }
@@ -80,7 +81,7 @@ export const useDashboardStore = create(
           console.log("Initializing core operational sync with backend...");
           get().pushAuditLog('SYNC_START', 'Fetching collection array from backend API.', 'Database Engine');
           
-          const response = await fetch('https://feedback-system-production-ec93.up.railway.app/api/feedback', {
+          const response = await fetch(`${getBackendUrl()}/api/feedbacks`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           });
@@ -120,7 +121,10 @@ export const useDashboardStore = create(
 
       injectRealFeedback: (feedbackItem) => {
         set((state) => {
-          const nextFeedbacks = [feedbackItem, ...state.feedbacks];
+          const item = feedbackItem?.data || feedbackItem;
+          if (!item) return state;
+          const exists = item._id ? state.feedbacks.some((f) => f._id === item._id) : false;
+          const nextFeedbacks = exists ? state.feedbacks : [item, ...state.feedbacks];
           return { feedbacks: nextFeedbacks, analytics: calculateAnalytics(nextFeedbacks) };
         });
       }
